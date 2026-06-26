@@ -206,6 +206,8 @@ const socialLinks = {
 export default function Portfolio() {
   const [dark, setDark] = useState(true);
   const [hoveredProject, setHoveredProject] = useState(null);
+  const [projectNotice, setProjectNotice] = useState("");
+  const [noticeTimer, setNoticeTimer] = useState(null);
 
   const bg = dark ? "#0a0a0a" : "#f5f0e8";
   const text = dark ? "#e8dfc8" : "#2c1f0e";
@@ -218,6 +220,28 @@ export default function Portfolio() {
   useEffect(() => {
     document.title = "Navnita Krishnan";
   }, []);
+
+  useEffect(() => {
+    return () => {
+      if (noticeTimer) {
+        clearTimeout(noticeTimer);
+      }
+    };
+  }, [noticeTimer]);
+
+  const handleProjectClick = (project, event) => {
+    if (project.url === "#") {
+      event.preventDefault();
+
+      if (noticeTimer) {
+        clearTimeout(noticeTimer);
+      }
+
+      setProjectNotice("No project yet");
+      const timer = setTimeout(() => setProjectNotice(""), 2200);
+      setNoticeTimer(timer);
+    }
+  };
 
   return (
     <div style={{
@@ -389,6 +413,18 @@ export default function Portfolio() {
           Projects
         </h2>
 
+        <div style={{
+          minHeight: "1.5rem",
+          margin: "-1.5rem 0 1.5rem",
+          fontFamily: "'Georgia', serif",
+          fontSize: "0.95rem",
+          color: accent,
+          opacity: projectNotice ? 1 : 0,
+          transition: "opacity 0.25s ease",
+        }}>
+          {projectNotice}
+        </div>
+
         <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
           {projects.map((project, i) => (
             <div key={i} style={{ position: "relative" }}>
@@ -406,6 +442,7 @@ export default function Portfolio() {
                   textDecoration: "none",
                   cursor: "pointer",
                 }}
+                onClick={(event) => handleProjectClick(project, event)}
                 onMouseEnter={() => setHoveredProject(i)}
                 onMouseLeave={() => setHoveredProject(null)}
               >
