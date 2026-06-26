@@ -176,9 +176,9 @@ const MoonIcon = () => (
 
 const projects = [
   {
-    title: "Project One",
-    description: "A short description of your first project — what it does, the tech used, and what makes it interesting.",
-    url: "#",
+    title: "Fact vs. Non-Fact Classifier",
+    description: "A machine learning web app that classifies text as Fact or Non-Fact using T5 embeddings and an SVM classifier.",
+    url: "https://fact-nonfact-classifier.streamlit.app/",
   },
   {
     title: "Project Two",
